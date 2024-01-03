@@ -27,14 +27,17 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
 
-      - name: Build and push main-app
+      - name: Check Docker username
         run: |
-          docker build -t username/main-app:tag .
-          docker push username/main-app:tag
-
-      - name: Build and push post-app
-        working-directory: ./post_app
-        run: |
-          docker build -t username/post-app:tag .
-          docker push username/post-app:tag
+          echo ${{ secrets.DOCKER_USERNAME }}
+#      - name: Build and push main-app
+#        run: |
+#          docker build -t username/main-app:tag .
+#          docker push username/main-app:tag
+#
+#      - name: Build and push post-app
+#        working-directory: ./post_app
+#        run: |
+#          docker build -t username/post-app:tag .
+#          docker push username/post-app:tag
 
