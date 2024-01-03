@@ -1,0 +1,6 @@
+.env
+.idea
+mysql
+Local_Logs
+DB_Backup
+venv

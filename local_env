@@ -1,0 +1,11 @@
+
+local-ip = 192.168.1.164
+
+DB_HOST=192.168.1.164
+DB_PORT=3306
+DB_USER=rezu
+DB_PASSWORD=rezuan00
+DB_NAME=collection
+
+MAIN_PORT=8080
+

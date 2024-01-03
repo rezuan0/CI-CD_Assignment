@@ -1,0 +1,85 @@
+version: "3.3"
+networks:
+    server-bridge:
+        driver: bridge
+
+services:
+    main-app:
+        image: "rezuan0/main-app:v3"
+        env_file:
+            - $PWD/.env
+        container_name: main-run
+        restart: always
+        ports:
+            - "${MAIN_PORT}:8080"
+        command: ["python3", "main.py"]
+        volumes:
+            - $PWD/main.py:/app/main.py
+            - $PWD/templates:/app/templates
+        networks:
+            - server-bridge
+
+    post-app:
+        image: "rezuan0/app1:v3"
+        env_file:
+            - $PWD/.env
+        container_name: app1-run
+        restart: always
+        ports:
+            - "${APP1_PORT}:7000"
+        command: ["streamlit", "run", "--server.port", "7000", "app1.py"]
+        volumes:
+            - $PWD/post_app/app1.py:/app1/app1.py
+        networks:
+            - server-bridge
+
+
+
+    music-app:
+        image: "rezuan0/app2:v3"
+        env_file:
+            - $PWD/.env
+        container_name: app2-run
+        restart: always
+        ports:
+            - "${APP2_PORT}:8000"
+        command: [ "streamlit", "run", "--server.port", "8000", "app2.py" ]
+        volumes:
+            - $PWD/music_app/app2.py:/app2/app2.py
+        networks:
+            - server-bridge
+
+
+    document-app:
+        image: "rezuan0/app3:v3"
+        env_file:
+            - $PWD/.env
+        container_name: app3-run
+        restart: always
+        ports:
+            - "${APP3_PORT}:9000"
+        command: [ "streamlit", "run", "--server.port", "9000", "app3.py" ]
+        volumes:
+            - $PWD/document_app/app3.py:/app3/app3.py
+        networks:
+            - server-bridge
+
+
+
+
+    mysql:
+        image: "mysql:8.0.29-debian"
+        container_name: "py-mysql"
+        ports:
+            - "${DB_PORT}:3306"
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: "${DB_PASSWORD}"
+            MYSQL_DATABASE: "${DB_NAME}"
+            MYSQL_ALLOW_EMPTY_PASSWORD: "no"
+        volumes:
+            - "$PWD/mysql/db:/var/lib/mysql:rw"
+            - "$PWD/mysql/log:/var/log/mysql:rw"
+            - "$PWD/dump.sql:/docker-entrypoint-initdb.d/dump.sql"
+        networks:
+            - server-bridge
