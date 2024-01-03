@@ -28,13 +28,13 @@ jobs:
 
 
       - name: Build and push main-app
-        working-directory: ./CI_CD_Assignment
+        working-directory: ./CI-CD_Assignment
         run: |
           docker build -t username/main-app:tag .
           docker push username/main-app:tag
 
       - name: Build and push post-app
-        working-directory: ./CI_CD_Assignment/post_app
+        working-directory: ./CI-CD_Assignment/post_app
         run: |
           docker build -t username/post-app:tag .
           docker push username/post-app:tag
