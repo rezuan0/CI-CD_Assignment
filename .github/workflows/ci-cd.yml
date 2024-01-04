@@ -25,6 +25,11 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Set Docker tag and username
+        run: |
+           export username=${{ secrets.DOCKER_USERNAME }}
+           export tag=$(echo $GITHUB_REF | awk 'BEGIN{FS="/"} {print $NF}')
 #      - name: Docker Login
 #        run: docker login -u username -p ${{ secrets.DOCKER_PASSWORD }}
 
