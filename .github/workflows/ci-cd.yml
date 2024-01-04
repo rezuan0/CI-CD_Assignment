@@ -23,7 +23,7 @@ jobs:
         run: |
           commit_count=$(git rev-list --count HEAD) # export tag="v${commit_count}"
           echo "Commit count: $commit_count"
-          echo "::set-env name=COMMIT_COUNT::$commit_count"
+          echo "COMMIT_COUNT=$commit_count" >> $GITHUB_ENV
 
 #      - name: Build and push main-app
 #        run: |
