@@ -26,10 +26,10 @@ jobs:
           echo "COMMIT_COUNT=$commit_count" >> $GITHUB_ENV
           
 
-      - name: Build and push main-app
+      - name: Build and push python-main-app
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/main-app:v${{ env.COMMIT_COUNT}} .
-          docker push ${{ secrets.DOCKER_USERNAME }}/main-app:v${{ env.COMMIT_COUNT}}
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/CI-Cd-main:v${{ env.COMMIT_COUNT}} .
+          docker push ${{ secrets.DOCKER_USERNAME }}/CI-Cd-main:v${{ env.COMMIT_COUNT}}
 
       - name: Build and push Post-app
         working-directory: ./post_app
