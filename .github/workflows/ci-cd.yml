@@ -22,12 +22,14 @@ jobs:
       - name: Get the commit number
         run: |
           commit_count=$(git rev-list --count HEAD)
+#          echo "Commit count: $commit_count"
+#          echo "COMMIT_COUNT=$commit_count" >> $GITHUB_ENV
           
 
       - name: Build and push python-main-app
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/ci-cd-main:v${{ env.COMMIT_COUNT }} .
-          docker push ${{ secrets.DOCKER_USERNAME }}/ci-cd-main:v${{ env.COMMIT_COUNT }}
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/ci-cd-main:v${{ commit_count }} .
+          docker push ${{ secrets.DOCKER_USERNAME }}/ci-cd-main:v${{ commit_count }}
 
 #      - name: Build and push Post-app
 #        working-directory: ./post_app
