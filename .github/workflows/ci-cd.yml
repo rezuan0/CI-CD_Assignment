@@ -26,17 +26,17 @@ jobs:
           export username=${{ secrets.DOCKER_USERNAME }}
           export tag="v${commit_count}"
 
-      - name: Build and push main-app
-        run: |
-          docker build -t $username/main-app:$tag .
-          docker push $username/main-app:$tag
+#      - name: Build and push main-app
+#        run: |
+#          docker build -t $username/main-app:$tag .
+#          docker push $username/main-app:$tag
       
           
 
-#      - name: Build and push main-app
-#        run: |
-#          docker build -t ${{ secrets.DOCKER_USERNAME }}/main-app:$tag .
-#          docker push ${{ secrets.DOCKER_USERNAME }}/main-app:$tag
+      - name: Build and push main-app
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/main-app:${tag} .
+          docker push ${{ secrets.DOCKER_USERNAME }}/main-app:${tag}
 #
 #      - name: Build and push post-app
 #        working-directory: ./post_app
