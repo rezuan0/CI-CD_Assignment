@@ -16,20 +16,27 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Log in to Docker Hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+
       - name: Get the commit number
         run: |
-          export commit_count=$(git rev-list --count HEAD)
+          commit_count=$(git rev-list --count HEAD)
           echo "Commit count: $commit_count"
+          export username=${{ secrets.DOCKER_USERNAME }}
           export tag="v${commit_count}"
-
-
-      - name: Docker Login
-        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build and push main-app
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/main-app:$tag .
-          docker push ${{ secrets.DOCKER_USERNAME }}/main-app:$tag
+          docker build -t $username/main-app:$tag .
+          docker push $username/main-app:$tag
+      
+          
+
+#      - name: Build and push main-app
+#        run: |
+#          docker build -t ${{ secrets.DOCKER_USERNAME }}/main-app:$tag .
+#          docker push ${{ secrets.DOCKER_USERNAME }}/main-app:$tag
 #
 #      - name: Build and push post-app
 #        working-directory: ./post_app
@@ -37,3 +44,14 @@ jobs:
 #          docker build -t username/post-app:tag .
 #          docker push username/post-app:tag
 
+
+
+#      - name: Get the commit number
+#        run: |
+#          export commit_count=$(git rev-list --count HEAD)
+#          echo "Commit count: $commit_count"
+#          export tag="v${commit_count}"
+#
+#
+#      - name: Docker Login
+#        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
