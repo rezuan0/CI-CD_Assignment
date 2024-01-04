@@ -31,20 +31,24 @@ jobs:
           docker build -t ${{ secrets.DOCKER_USERNAME }}/main-app:v${{ env.COMMIT_COUNT}} .
           docker push ${{ secrets.DOCKER_USERNAME }}/main-app:v${{ env.COMMIT_COUNT}}
 
-      - name: Build and push post-app
+      - name: Build and push Post-app
         working-directory: ./post_app
         run: |
           docker build -t ${{ secrets.DOCKER_USERNAME }}/post-app:v${{ env.COMMIT_COUNT}} .
           docker push ${{ secrets.DOCKER_USERNAME }}/post-app:v${{ env.COMMIT_COUNT}}
 
+      - name: Build and push Music-app
+        working-directory: ./music_app
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/music-app:v${{ env.COMMIT_COUNT}} .
+          docker push ${{ secrets.DOCKER_USERNAME }}/music-app:v${{ env.COMMIT_COUNT}}
+
+      - name: Build and push Document-app
+        working-directory: ./document_app
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/document-app:v${{ env.COMMIT_COUNT}} .
+          docker push ${{ secrets.DOCKER_USERNAME }}/document-app:v${{ env.COMMIT_COUNT}}
 
 
-#      - name: Get the commit number
-#        run: |
-#          export commit_count=$(git rev-list --count HEAD)
-#          echo "Commit count: $commit_count"
-#          export tag="v${commit_count}"
-#
-#
-#      - name: Docker Login
-#        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+
+
