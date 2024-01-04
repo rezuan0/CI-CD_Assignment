@@ -18,7 +18,9 @@ jobs:
 
       - name: Get the commit number
         run: |
-          tag=$(git rev-list --count HEAD)
+          export commit_count=$(git rev-list --count HEAD)
+          echo "Commit count: $commit_count"
+          export tag="v${commit_count}"
 
 
       - name: Docker Login
