@@ -24,24 +24,18 @@ jobs:
           commit_count=$(git rev-list --count HEAD) # export tag="v${commit_count}"
           echo "Commit count: $commit_count"
           echo "COMMIT_COUNT=$commit_count" >> $GITHUB_ENV
-
-#      - name: Build and push main-app
-#        run: |
-#          docker build -t $username/main-app:$tag .
-#          docker push $username/main-app:$tag
-      
           
 
       - name: Build and push main-app
         run: |
           docker build -t ${{ secrets.DOCKER_USERNAME }}/main-app:v${{ env.COMMIT_COUNT}} .
           docker push ${{ secrets.DOCKER_USERNAME }}/main-app:v${{ env.COMMIT_COUNT}}
-#
-#      - name: Build and push post-app
-#        working-directory: ./post_app
-#        run: |
-#          docker build -t username/post-app:tag .
-#          docker push username/post-app:tag
+
+      - name: Build and push post-app
+        working-directory: ./post_app
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/post-app:v${{ env.COMMIT_COUNT}} .
+          docker push ${{ secrets.DOCKER_USERNAME }}/post-app:v${{ env.COMMIT_COUNT}}
 
 
 
