@@ -1,0 +1,66 @@
+name: Extract version from commit message
+id: extract version
+run:|
+Iversion=$(git log -l --pretty=&B | grep |-oP 'version: \K.*")
+echo "::set-output name=version::$(version]"
+
+name: Bulld and.push Docker image
+uses: docker/build-push-action@v2
+with:
+context:
+push: true
+tags: $4( steps.extract_version.outputs.version H
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+steps:
+name: Checkout repository
+uses: actions/checkout@v2
+name: Build and push Docker image
+env:
+DOCKER_USERNAME: $(( secrets.DOCKER_USERNAME ))
+DOCKER_PASSWORD: $1( secrets.DOCKER_PASSWORD H)
+DOCKER_IMAGE: $(f secrets.DOCKER_IMAGE ))
+run:|
+docker build -t $DOCKER_ USERNAME/DOCKER_IMAGE:latest
+echo "$DOCKER PASSWORD" I docker login -u "$DOCKER_USERNAME" --password-stdin
+docker push $DOCKER_USERNAME/DOCKER_IMAGE:latest
+deploy:
+runs-on: ubuntu-latest
+needs: build
+steps:
+name: Checkout repository
+uses: actions/checkout@v2
+name: SSH into server and deploy
+uses: appleboy/ssh-action@v0.4.0
+with:
+host: $tf secrets.SERVER HOST X)
+username: $tf secrets.SERVER_USERNAME ))
+key: $(f secrets.SERVER_SSH_KEY H
+script:
+-
+# Pull the latest changes from the repository
+git pull
+# Run Docker Compose
+docker-compose down && docker-compose up -d
+
+
+
+
+
+
+
+
+
